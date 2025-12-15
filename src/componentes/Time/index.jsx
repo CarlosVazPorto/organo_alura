@@ -1,0 +1,60 @@
+import Colaborador from '../Colaborador';
+import './Time.css';
+import hexToRgba from 'hex-to-rgba';
+
+const Time = (props) => {
+
+    const hexCorDestaques = props.corDestaques;
+
+    return (
+        
+        (props.colaboradores.length > 0) && 
+        
+        <section 
+            className='time'
+            style={ { 
+                backgroundColor: hexToRgba(hexCorDestaques, 0.4), 
+                backgroundImage: 'url(src/assets/imagens/fundo.png)'
+            } }
+        >
+            
+            <input 
+                type='color' 
+                className='input-cor' 
+                value={props.corDestaques}
+                onChange={(evento) => {
+                    props.mudarCor(evento.target.value, props.time.id)
+                }}
+            />
+
+            <h3 
+            style={ { borderColor: props.corDestaques } }
+            >
+                {props.nome}
+            </h3>
+
+            <div className='colaboradores'>
+                {props.colaboradores.map( 
+                    (colaborador) => {
+                        return (
+                            <Colaborador 
+                                corDestaques={props.corDestaques}
+                                key={colaborador.id}
+                                id={colaborador.id}
+                                nome={colaborador.nome}
+                                cargo={colaborador.cargo}
+                                imagem={colaborador.imagem}
+                                favorito={colaborador.favorito}
+                                aoDeletar={props.aoDeletar}
+                                aoFavoritar={props.aoFavoritar}
+                            />
+                        )
+                    }
+                )}
+            </div>
+            
+        </section>
+    );
+};
+
+export default Time;
